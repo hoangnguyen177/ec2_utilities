@@ -1,7 +1,9 @@
+#!/usr/bin/env python
 import os
 import ec2
 import sys
 import getopt
+from tabulate import tabulate
 
 def check_env_variables():
     if os.environ.get('EC2_ACCESS_KEY')==None \
@@ -19,8 +21,12 @@ def create_ec2_connection(region):
 
 def list_ami_ids(connection):
     images = connection.get_all_images()
+    _table_headers = ['ID', 'Name']
+    _table_rows = [] 
     for image in images:
-        print image
+        _table_row=[image.id, image.name]
+        _table_rows.append(_table_row)
+    print tabulate(_table_rows, _table_headers)
 
 def usage():
         print "To list images"
@@ -40,13 +46,11 @@ def main(argv):
             sys.exit()
         try:
             conn = create_ec2_connection('NeCTAR')
-            print conn
-            dir(conn)
         except Exception as detail:
             print "Problem creating ec2 connection:", detail
             sys.exit(2)
         if o in ("-i", "--images"):
-            print "images" #list_ami_ids(conn)
+            list_ami_ids(conn)
         conn.close()
 if __name__ == '__main__':
     main(sys.argv[1:])             

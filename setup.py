@@ -13,5 +13,6 @@ setup(name='ec2utils',
       ],
       install_requires=[
         "boto>=2.34.0",
+        "tabulate>=0.7.4"
         ]
 )

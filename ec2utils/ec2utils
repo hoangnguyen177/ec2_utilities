@@ -1,3 +1,6 @@
 #!/bin/bash
 ec2util_dir='/usr/lib/python2.6/site-packages/ec2utils-0.1-py2.6.egg' 
+prog_dir='ec2utils'
 prog='ec2utils.py'
+exec="${ec2util_dir}/${prog_dir}/${prog}"
+${exec} ${@}
